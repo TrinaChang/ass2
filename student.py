@@ -38,7 +38,7 @@ def transform(mode):
             transforms.ColorJitter(brightness=0.5),
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
-            transforms.RandomAffine(degrees=(30, 70), translate=(0.1, 0.3), scale=(0.5, 0.75)),
+            transforms.RandomRotation(degrees=(0, 180)),
             transforms.ToTensor()
         ])
         # return transforms.ToTensor()
@@ -50,6 +50,7 @@ def transform(mode):
             transforms.ColorJitter(brightness=0.5),
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
+            transforms.RandomRotation(degrees=(0, 180)),
             transforms.ToTensor()
         ])
         # return transforms.ToTensor()

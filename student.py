@@ -143,7 +143,7 @@ net = Network()
 ############################################################################
 ######      Specify the optimizer and loss function                   ######
 ############################################################################
-optimizer = optim.AdamW(net.parameters(), lr=0.005, betas=(0.9, 0.999), weight_decay=0.0001, eps=1e-8)
+optimizer = optim.AdamW(net.parameters(), lr=0.005, weight_decay=0.0001)
 
 loss_func = nn.CrossEntropyLoss()
 

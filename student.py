@@ -105,7 +105,7 @@ class Network(nn.Module):
         self.l4 = self._make_layer(1024, 1, 5)
 
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
-        self.fc = nn.Linear(256, 8)
+        self.fc = nn.Linear(1024, 8)
      
     def _make_layer(self, planes, blocks, stride=1):
         layers = []

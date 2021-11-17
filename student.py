@@ -39,6 +39,7 @@ def transform(mode):
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
             transforms.ToTensor()
+
         ])
         # return transforms.ToTensor()
         return trainSet
@@ -95,6 +96,8 @@ class Network(nn.Module):
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.dropout = nn.Dropout2d(p=0.3)
+        self.dropout2 = nn.Dropout2d(p=0.35)
+        self.dropout3 = nn.Dropout2d(p=0.4)
         self.l1 = self._make_layer(64, 2)
         self.l2 = self._make_layer(128, 2, 2)
         self.l3 = self._make_layer(256, 2, 2)
@@ -129,10 +132,10 @@ class Network(nn.Module):
         x = self.maxpool(x)
         x = self.l1(x)
         x = self.l2(x)
-        x = self.dropout(x)
+        x = self.dropout2(x)
         x = self.l3(x) 
         x = self.l4(x)
-        x = self.dropout(x)
+        x = self.dropout3(x)
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = self.fc(x)
@@ -143,7 +146,7 @@ net = Network()
 ############################################################################
 ######      Specify the optimizer and loss function                   ######
 ############################################################################
-optimizer = optim.Adam(net.parameters(), lr=0.005, weight_decay=0.0001)
+optimizer = optim.AdamW(net.parameters(), lr=0.005)
 
 loss_func = nn.CrossEntropyLoss()
 

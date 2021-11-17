@@ -96,9 +96,9 @@ class Network(nn.Module):
         self.bn = nn.BatchNorm2d(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
-        self.dropout = nn.Dropout2d(p=0.2)
+        self.dropout = nn.Dropout2d(p=0.3)
         self.dropout2 = nn.Dropout2d(p=0.25)
-        self.dropout3 = nn.Dropout2d(p=0.3)
+        self.dropout3 = nn.Dropout2d(p=0.2)
         self.l1 = self._make_layer(64, 2)
         self.l2 = self._make_layer(128, 2, 2)
         self.l3 = self._make_layer(256, 2, 2)
@@ -174,5 +174,5 @@ scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gam
 ############################################################################
 dataset = "./data"
 train_val_split = 0.8
-batch_size = 128
+batch_size = 64
 epochs = 300

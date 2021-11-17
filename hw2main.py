@@ -17,6 +17,8 @@ from config import device
 
 import student
 
+import wandb
+
 # This class allows train/test split with different transforms
 class DatasetFromSubset(Dataset):
     def __init__(self, subset, transform=None):
@@ -52,12 +54,21 @@ def test_network(net,testloader,print_confusion=False):
 
     model_accuracy = total_correct / total_images * 100
     print(', {0} test {1:.2f}%'.format(total_images,model_accuracy))
+    wandb.log({"test accuracy": model_accuracy})
     if print_confusion:
         np.set_printoptions(precision=2, suppress=True)
         print(conf_matrix)
     net.train()
 
 def main():
+
+    config = {
+      "learning_rate": 1e-5,
+      "epochs": 300,
+      "batch_size": 128
+    }
+    wandb.init(project="9444_hw2", entity="tanyawhy", config=config)
+    
     print("Using device: {}"
           "\n".format(str(device)))
     ########################################################################
@@ -134,6 +145,7 @@ def main():
         model_accuracy = total_correct / total_images * 100
         print('ep {0}, loss: {1:.2f}, {2} train {3:.2f}%'.format(
                epoch, total_loss, total_images, model_accuracy), end='')
+        wandb.log({"loss": total_loss, "train accuracy": model_accuracy})
 
         if student.train_val_split < 1:
             test_network(net,testloader,

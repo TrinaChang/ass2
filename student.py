@@ -94,4 +94,4 @@ scheduler = None
 dataset = "./data"
 train_val_split = 0.8
 batch_size = 200
-epochs = 10
+epochs = 100

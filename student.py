@@ -39,7 +39,6 @@ def transform(mode):
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
             transforms.ToTensor()
-
         ])
         # return transforms.ToTensor()
         return trainSet

@@ -98,9 +98,10 @@ class Network(nn.Module):
         self.dropout2 = nn.Dropout2d(p=0.25)
         self.dropout3 = nn.Dropout2d(p=0.35)
         self.l1 = self._make_layer(64, 2)
-        self.l2 = self._make_layer(128, 2, 2)
+        self.l2 = self._make_layer(128, 3, 2)
         self.l3 = self._make_layer(256, 2, 2)
-        self.l4 = self._make_layer(512, 2, 2)
+        self.l4 = self._make_layer(512, 3, 2)
+
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.fc = nn.Linear(512, 8)
      
@@ -130,9 +131,11 @@ class Network(nn.Module):
         x = self.dropout(x)
         x = self.maxpool(x)
         x = self.l1(x)
+        x = self.dropout2(x)
         x = self.l2(x)
         x = self.dropout2(x)
-        x = self.l3(x) 
+        x = self.l3(x)
+        x = self.dropout3(x)
         x = self.l4(x)
         x = self.dropout3(x)
         x = self.avgpool(x)
@@ -145,7 +148,7 @@ net = Network()
 ############################################################################
 ######      Specify the optimizer and loss function                   ######
 ############################################################################
-optimizer = optim.AdamW(net.parameters(), lr=0.005)
+optimizer = optim.AdamW(net.parameters(), lr=0.001)
 
 loss_func = nn.CrossEntropyLoss()
 

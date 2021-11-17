@@ -102,7 +102,7 @@ class Network(nn.Module):
         self.l2 = self._make_layer(128, 2, 2)
         self.l3 = self._make_layer(256, 1, 3)
         self.l4 = self._make_layer(512, 1, 4)
-        self.l4 = self._make_layer(1024, 1, 5)
+        self.l5 = self._make_layer(1024, 1, 5)
 
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.fc = nn.Linear(1024, 8)
@@ -137,6 +137,7 @@ class Network(nn.Module):
         x = self.dropout2(x)
         x = self.l3(x)
         x = self.l4(x)
+        x = self.l5(x)
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = self.fc(x)

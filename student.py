@@ -41,7 +41,7 @@ def transform(mode):
             transforms.Resize(100),
             transforms.RandomCrop(80),
             transforms.ColorJitter(brightness=0.5),
-            transforms.RandomHorizonFlip(p=0.5),
+            transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
             transforms.ToTensor()
         ])
@@ -52,7 +52,7 @@ def transform(mode):
             transforms.Resize(100),
             transforms.RandomCrop(80),
             transforms.ColorJitter(brightness=0.5),
-            transforms.RandomHorizonFlip(p=0.5),
+            transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
             transforms.ToTensor()
         ])

@@ -96,17 +96,13 @@ class Network(nn.Module):
         self.bn = nn.BatchNorm2d(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
-        self.dropout = nn.Dropout2d(p=0.6)
-        self.dropout2 = nn.Dropout2d(p=0.1)
-        self.dropout3 = nn.Dropout2d(p=0.2)
+        self.dropout = nn.Dropout2d(p=0.3)
         self.l1 = self._make_layer(64, 2)
         self.l2 = self._make_layer(128, 2, 2)
-        self.l3 = self._make_layer(256, 1, 3)
-        self.l4 = self._make_layer(512, 1, 4)
-        self.l5 = self._make_layer(1024, 1, 5)
-
+        self.l3 = self._make_layer(256, 2, 2)
+        self.l4 = self._make_layer(512, 2, 2)
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
-        self.fc = nn.Linear(1024, 8)
+        self.fc = nn.Linear(512, 8)
      
     def _make_layer(self, planes, blocks, stride=1):
         layers = []
@@ -135,10 +131,10 @@ class Network(nn.Module):
         x = self.maxpool(x)
         x = self.l1(x)
         x = self.l2(x)
-        x = self.dropout2(x)
-        x = self.l3(x)
+        x = self.dropout(x)
+        x = self.l3(x) 
         x = self.l4(x)
-        x = self.l5(x)
+        x = self.dropout(x)
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = self.fc(x)
@@ -149,7 +145,7 @@ net = Network()
 ############################################################################
 ######      Specify the optimizer and loss function                   ######
 ############################################################################
-optimizer = optim.AdamW(net.parameters(), lr=0.001)
+optimizer = optim.AdamW(net.parameters(), lr=1e-3)
 
 loss_func = nn.CrossEntropyLoss()
 

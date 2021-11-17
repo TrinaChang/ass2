@@ -150,4 +150,4 @@ scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gam
 dataset = "./data"
 train_val_split = 0.8
 batch_size = 64
-epochs = 20
+epochs = 200

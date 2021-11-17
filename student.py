@@ -37,9 +37,27 @@ def transform(mode):
     You may specify different transforms for training and testing
     """
     if mode == 'train':
-        return transforms.ToTensor()
+        trainSet = transforms.Compose([
+            transforms.Resize(100),
+            transforms.RandomCrop(80),
+            transforms.ColorJitter(brightness=0.5),
+            transforms.RandomHorizonFlip(p=0.5),
+            transforms.RandomVerticalFlip(p=0.05),
+            transforms.ToTensor()
+        ])
+        # return transforms.ToTensor()
+        return trainSet
     elif mode == 'test':
-        return transforms.ToTensor()
+        testSet = transforms.Compose([
+            transforms.Resize(100),
+            transforms.RandomCrop(80),
+            transforms.ColorJitter(brightness=0.5),
+            transforms.RandomHorizonFlip(p=0.5),
+            transforms.RandomVerticalFlip(p=0.05),
+            transforms.ToTensor()
+        ])
+        # return transforms.ToTensor()
+        return testSet
 
 
 ############################################################################
@@ -94,4 +112,4 @@ scheduler = None
 dataset = "./data"
 train_val_split = 0.8
 batch_size = 200
-epochs = 100
+epochs = 20

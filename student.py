@@ -143,9 +143,9 @@ net = Network()
 ############################################################################
 ######      Specify the optimizer and loss function                   ######
 ############################################################################
-optimizer = optim.SGD(net.parameters(), lr=0.005, weight_decay=0.0001, momentum=0)
+optimizer = optim.Adam(net.parameters(), lr=0.005, weight_decay=0.0001)
 
-loss_func = nn.NLLLoss()
+loss_func = nn.CrossEntropyLoss()
 
 
 ############################################################################

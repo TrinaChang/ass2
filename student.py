@@ -69,7 +69,7 @@ class ResidualBlock(nn.Module):
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.bn = nn.BatchNorm2d(planes)
         self.relu = nn.ReLU(inplace=True)
-        self.dropout = nn.Dropout2d(0.3, inplace=True)
+        self.dropout = nn.Dropout2d(0.15, inplace=True)
         self.downsample = downsample
         
     def forward(self, x):
@@ -77,8 +77,8 @@ class ResidualBlock(nn.Module):
         x = self.conv1(x)
         x = self.bn(x)
         x = self.relu(x)
+        x = self.dropout
         x = self.conv2(x)
-        x = self.maxpool(x)
         # x = self.bn(x)
         
         # apply skip connection, add identity

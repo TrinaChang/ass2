@@ -136,7 +136,7 @@ class Network(nn.Module):
         x = self.maxpool(x)
         x = self.l1(x)
         x = self.l2(x)
-        x = self.bn2(x)
+        # x = self.bn2(x)
         x = self.relu(x)
         x = self.dropout2(x)
         x = self.maxpool(x)
@@ -174,7 +174,7 @@ def weights_init(m):
         nn.init.constant_(m.bias, 0)
     return
 
-scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gamma=0.1)
+scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[80, 160, 240], gamma=0.1)
 
 ############################################################################
 #######              Metaparameters and training options              ######

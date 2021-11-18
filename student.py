@@ -105,7 +105,7 @@ class Network(nn.Module):
         self.l3 = self._make_layer(256, 2, 2)
         self.l4 = self._make_layer(512, 2, 2)
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
-        self.fc = nn.Linear(512, 8)
+        self.fc = nn.Linear(512, 256)
         self.fc2 = nn.Linear(256, 8)
      
     def _make_layer(self, planes, blocks, stride=1):
@@ -144,6 +144,8 @@ class Network(nn.Module):
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = self.fc(x)
+        x = self.relu(x)
+        x = self.fc2(x)
         return x
 
 net = Network()

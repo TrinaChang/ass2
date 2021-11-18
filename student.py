@@ -96,6 +96,7 @@ class Network(nn.Module):
         self.bn = nn.BatchNorm2d(self.inplanes)
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
+        self.maxpool2 = nn.MaxPool2d(kernel_size=3, stride=3, padding=1)
         self.dropout = nn.Dropout2d(p=0.1)
         self.dropout2 = nn.Dropout2d(p=0.15)
         self.dropout3 = nn.Dropout2d(p=0.2)
@@ -135,7 +136,7 @@ class Network(nn.Module):
         x = self.l1(x)
         x = self.l2(x)
         x = self.dropout2(x)
-        x = self.maxpool(x)
+        x = self.maxpool2(x)
         x = self.l3(x) 
         x = self.l4(x)
         x = self.dropout3(x)
@@ -169,8 +170,8 @@ def weights_init(m):
         nn.init.constant_(m.bias, 0)
     return
 
-# scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gamma=0.1)
-scheduler = None
+scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gamma=0.1)
+
 ############################################################################
 #######              Metaparameters and training options              ######
 ############################################################################

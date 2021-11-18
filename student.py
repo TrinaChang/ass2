@@ -104,7 +104,8 @@ class Network(nn.Module):
         self.l3 = self._make_layer(256, 2, 2)
         self.l4 = self._make_layer(512, 2, 2)
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
-        self.fc = nn.Linear(512, 8)
+        self.fc = nn.Linear(512, 256)
+        self.fc2 = nn.Linear(256, 8)
      
     def _make_layer(self, planes, blocks, stride=1):
         layers = []
@@ -132,18 +133,16 @@ class Network(nn.Module):
         x = self.dropout(x)
         x = self.maxpool(x)
         x = self.l1(x)
-        x = self.avgpool(x)
         x = self.l2(x)
         x = self.dropout2(x)
         x = self.maxpool(x)
         x = self.l3(x) 
-        x = self.avgpool(x)
         x = self.l4(x)
         x = self.dropout3(x)
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = self.fc(x)
-        return x
+        return F.log_softmax(x, dim=1)
 
 net = Network()
     

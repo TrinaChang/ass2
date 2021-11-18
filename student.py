@@ -39,8 +39,8 @@ def transform(mode):
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),
-            transforms.RandomErasing(), 
             transforms.ToTensor(),
+            transforms.RandomErasing(),
         ])
         # return transforms.ToTensor()
         return trainSet
@@ -52,8 +52,8 @@ def transform(mode):
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),
-            transforms.RandomErasing(), 
             transforms.ToTensor(),
+            transforms.RandomErasing(), 
         ])
         # return transforms.ToTensor()
         return testSet

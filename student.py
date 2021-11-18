@@ -35,8 +35,7 @@ def transform(mode):
         trainSet = transforms.Compose([
             transforms.Resize(100),
             transforms.RandomCrop(80),
-            # transforms.ColorJitter(brightness=0.5),
-            transforms.RandomAutocontrast(),
+            transforms.ColorJitter(brightness=0.5),
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),
@@ -49,8 +48,7 @@ def transform(mode):
         testSet = transforms.Compose([
             transforms.Resize(100),
             transforms.RandomCrop(80),
-            # transforms.ColorJitter(brightness=0.5),
-            transforms.RandomAutocontrast(),
+            transforms.ColorJitter(brightness=0.5),
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),

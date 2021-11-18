@@ -35,11 +35,13 @@ def transform(mode):
         trainSet = transforms.Compose([
             transforms.Resize(100),
             transforms.RandomCrop(80),
-            transforms.ColorJitter(brightness=0.5),
+            # transforms.ColorJitter(brightness=0.5),
+            transforms.Autocontrast(),
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),
-            transforms.ToTensor()
+            transforms.ToTensor(),
+            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
         # return transforms.ToTensor()
         return trainSet
@@ -47,11 +49,13 @@ def transform(mode):
         testSet = transforms.Compose([
             transforms.Resize(100),
             transforms.RandomCrop(80),
-            transforms.ColorJitter(brightness=0.5),
+            # transforms.ColorJitter(brightness=0.5),
+            transforms.Autocontrast(),
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),
-            transforms.ToTensor()
+            transforms.ToTensor(),
+            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
         # return transforms.ToTensor()
         return testSet

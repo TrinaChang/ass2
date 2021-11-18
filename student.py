@@ -40,7 +40,6 @@ def transform(mode):
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),
             transforms.ToTensor(),
-            transforms.RandomErasing(),
         ])
         # return transforms.ToTensor()
         return trainSet
@@ -53,7 +52,6 @@ def transform(mode):
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),
             transforms.ToTensor(),
-             
         ])
         # return transforms.ToTensor()
         return testSet
@@ -76,9 +74,9 @@ class ResidualBlock(nn.Module):
     def forward(self, x):
         identity = x
         x = self.conv1(x)
+        x = self.conv2(x)
         x = self.bn(x)
         x = self.relu(x)
-        x = self.conv2(x)
         # x = self.bn(x)
         
         # apply skip connection, add identity

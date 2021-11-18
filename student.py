@@ -95,6 +95,7 @@ class Network(nn.Module):
         self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False)
         self.bn = nn.BatchNorm2d(self.inplanes)
         self.bn2 = nn.BatchNorm2d(128)
+        self.bn3 = nn.BatchNorm2d(512)
         self.relu = nn.ReLU()
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.maxpool2 = nn.MaxPool2d(kernel_size=3, stride=3, padding=1)

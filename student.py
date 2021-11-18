@@ -147,6 +147,7 @@ class Network(nn.Module):
         x = self.dropout3(x)
         x = self.maxpool(x)
         x = self.convend
+        x = self.relu(x)
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = self.fc2(x)

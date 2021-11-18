@@ -39,6 +39,7 @@ def transform(mode):
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),
+            transforms.RandomErasing(), 
             transforms.ToTensor(),
         ])
         # return transforms.ToTensor()
@@ -51,6 +52,7 @@ def transform(mode):
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),
+            transforms.RandomErasing(), 
             transforms.ToTensor(),
         ])
         # return transforms.ToTensor()
@@ -137,13 +139,13 @@ class Network(nn.Module):
         x = self.maxpool(x)
         x = self.l1(x)
         x = self.l2(x)
-        x = self.bn2(x)
+        # x = self.bn2(x)
         x = self.relu(x)
         x = self.dropout2(x)
         x = self.maxpool(x)
         x = self.l3(x)
         x = self.l4(x)
-        x = self.bn3(x)
+        # x = self.bn3(x)
         x = self.relu(x)
         x = self.dropout3(x)
         x = self.avgpool(x)

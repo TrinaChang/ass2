@@ -39,6 +39,8 @@ def test_network(net,testloader,print_confusion=False):
     net.eval()
     total_images = 0
     total_correct = 0
+    test_loss = 0
+    criterion = student.loss_func
     conf_matrix = np.zeros((8,8))
     with torch.no_grad():
         for data in testloader:
@@ -46,6 +48,10 @@ def test_network(net,testloader,print_confusion=False):
             images = images.to(device)
             labels = labels.to(device)
             outputs = net(images)
+            
+            loss = criterion(outputs, labels) # Calculate loss
+            test_loss += loss.item()
+        
             _, predicted = torch.max(outputs.data, 1)
             total_images += labels.size(0)
             total_correct += (predicted == labels).sum().item()
@@ -53,8 +59,12 @@ def test_network(net,testloader,print_confusion=False):
                 labels.cpu(),predicted.cpu(),labels=[0,1,2,3,4,5,6,7])
 
     model_accuracy = total_correct / total_images * 100
-    print(', {0} test {1:.2f}%'.format(total_images,model_accuracy))
+    print(', {0} test {1:.2f}% , test_loss： {2:.2f} '.format(total_images,model_accuracy, test_loss))
     wandb.log({"test accuracy": model_accuracy})
+    wandb.log({"test loss": test_loss})
+    if model_accuracy > 78.5:
+        model_name = 'checkModel_{0:.2f}.pth'.format(model_accuracy)
+        torch.save(net.state_dict(), model_name)
     if print_confusion:
         np.set_printoptions(precision=2, suppress=True)
         print(conf_matrix)

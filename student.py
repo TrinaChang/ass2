@@ -132,7 +132,7 @@ class Network(nn.Module):
         x = self.bn(x)
         x = self.relu(x)
         x = self.dropout(x)
-        x = self.maxpool(x)
+        x = self.avgpool(x)
         x = self.l1(x)
         x = self.l2(x)
         x = self.relu(x)
@@ -142,7 +142,7 @@ class Network(nn.Module):
         x = self.l4(x)
         x = self.relu(x)
         x = self.dropout3(x)
-        x = self.maxpool(x)
+        x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = self.fc(x)
         return x

@@ -53,7 +53,7 @@ def transform(mode):
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),
             transforms.ToTensor(),
-            transforms.RandomErasing(), 
+             
         ])
         # return transforms.ToTensor()
         return testSet

@@ -94,7 +94,7 @@ class Network(nn.Module):
         self.inplanes = 64  # if change this, change first arg of self.l1 to the same value
         self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False)
         self.bn = nn.BatchNorm2d(self.inplanes)
-        self.relu = nn.ReLU(inplace=True)
+        self.relu = nn.ReLU()
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.maxpool2 = nn.MaxPool2d(kernel_size=3, stride=3, padding=1)
         self.dropout = nn.Dropout2d(p=0.1)

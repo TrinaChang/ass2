@@ -38,7 +38,7 @@ def transform(mode):
             transforms.ColorJitter(brightness=0.5),
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
-            transforms.RandomRotation(degrees=(0, 180)),
+            transforms.RandomRotation(degrees=60),
             transforms.ToTensor()
         ])
         # return transforms.ToTensor()
@@ -50,7 +50,7 @@ def transform(mode):
             transforms.ColorJitter(brightness=0.5),
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
-            transforms.RandomRotation(degrees=(0, 180)),
+            transforms.RandomRotation(degrees=60),
             transforms.ToTensor()
         ])
         # return transforms.ToTensor()
@@ -139,8 +139,8 @@ class Network(nn.Module):
         x = self.dropout2(x)
         x = self.maxpool(x)
         x = self.l3(x)
-        x = self.relu(x)
         x = self.l4(x)
+        x = self.relu(x)
         x = self.dropout3(x)
         x = self.avgpool(x)
         x = torch.flatten(x, 1)

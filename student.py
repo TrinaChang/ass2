@@ -146,7 +146,7 @@ class Network(nn.Module):
         x = self.fc(x)
         x = self.relu(x)
         x = self.fc2(x)
-        return x
+        return F.log_softmax(x, dim=1)
 
 net = Network()
     

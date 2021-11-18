@@ -40,7 +40,6 @@ def transform(mode):
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),
             transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
         # return transforms.ToTensor()
         return trainSet
@@ -53,7 +52,6 @@ def transform(mode):
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),
             transforms.ToTensor(),
-            transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
         ])
         # return transforms.ToTensor()
         return testSet
@@ -137,6 +135,7 @@ class Network(nn.Module):
         x = self.maxpool(x)
         x = self.l1(x)
         x = self.l2(x)
+        x = self.bn(x)
         x = self.relu(x)
         x = self.dropout2(x)
         x = self.maxpool(x)

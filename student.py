@@ -35,10 +35,10 @@ def transform(mode):
         trainSet = transforms.Compose([
             transforms.Resize(100),
             transforms.RandomCrop(80),
-            transforms.ColorJitter(brightness=0.5, saturation=0.2),
+            transforms.ColorJitter(brightness=0.5),
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
-            transforms.RandomRotation(degrees=(0, 60)),
+            transforms.RandomRotation(degrees=(0, 180)),
             transforms.ToTensor()
         ])
         # return transforms.ToTensor()
@@ -47,10 +47,10 @@ def transform(mode):
         testSet = transforms.Compose([
             transforms.Resize(100),
             transforms.RandomCrop(80),
-            transforms.ColorJitter(brightness=0.5, saturation=0.2),
+            transforms.ColorJitter(brightness=0.5),
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
-            transforms.RandomRotation(degrees=(0, 60)),
+            transforms.RandomRotation(degrees=(0, 180)),
             transforms.ToTensor()
         ])
         # return transforms.ToTensor()
@@ -75,7 +75,7 @@ class ResidualBlock(nn.Module):
         identity = x
         x = self.conv1(x)
         x = self.bn(x)
-        x = self.relu(x) 
+        x = self.relu(x)
         x = self.conv2(x)
         # x = self.bn(x)
         
@@ -101,12 +101,11 @@ class Network(nn.Module):
         self.dropout2 = nn.Dropout2d(p=0.15)
         self.dropout3 = nn.Dropout2d(p=0.2)
         self.l1 = self._make_layer(64, 2)
-        self.l2 = self._make_layer(128, 3, 2)
+        self.l2 = self._make_layer(128, 2, 2)
         self.l3 = self._make_layer(256, 2, 2)
-        # self.l4 = self._make_layer(512, 2, 2)
+        self.l4 = self._make_layer(512, 2, 2)
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
-        # self.fc = nn.Linear(512, 8)
-        self.fc = nn.Linear(256, 8)
+        self.fc = nn.Linear(512, 8)
         self.fc2 = nn.Linear(256, 8)
      
     def _make_layer(self, planes, blocks, stride=1):
@@ -139,8 +138,9 @@ class Network(nn.Module):
         x = self.relu(x)
         x = self.dropout2(x)
         x = self.maxpool(x)
-        x = self.l3(x) 
-        # x = self.l4(x)
+        x = self.l3(x)
+        x = self.relu(x)
+        x = self.l4(x)
         x = self.dropout3(x)
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
@@ -152,7 +152,7 @@ net = Network()
 ############################################################################
 ######      Specify the optimizer and loss function                   ######
 ############################################################################
-optimizer = optim.AdamW(net.parameters(), lr=3e-4)
+optimizer = optim.AdamW(net.parameters(), lr=1e-3)
 
 loss_func = nn.CrossEntropyLoss()
 
@@ -180,4 +180,4 @@ scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gam
 dataset = "./data"
 train_val_split = 0.8
 batch_size = 64
-epochs = 500
+epochs = 300

@@ -105,7 +105,7 @@ class Network(nn.Module):
         self.l2 = self._make_layer(128, 2, 2)
         self.l3 = self._make_layer(256, 2, 2)
         self.l4 = self._make_layer(512, 2, 2)
-        self.convend = nn.Conv2d(512, 256, 3)
+        self.convend = nn.Conv2d(512, 256, 1)
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.fc = nn.Linear(512, 8)
         self.fc2 = nn.Linear(256, 8)

@@ -140,6 +140,7 @@ class Network(nn.Module):
         x = self.maxpool(x)
         x = self.l3(x)
         x = self.l4(x)
+        x = self.bn(x)
         x = self.relu(x)
         x = self.dropout3(x)
         x = self.avgpool(x)

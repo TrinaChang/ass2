@@ -77,7 +77,6 @@ class ResidualBlock(nn.Module):
         x = self.conv1(x)
         x = self.bn(x)
         x = self.relu(x)
-        x = self.dropout(x)
         x = self.conv2(x)
         # x = self.bn(x)
         
@@ -94,7 +93,7 @@ class Network(nn.Module):
     def __init__(self):
         super().__init__()
         self.inplanes = 64  # if change this, change first arg of self.l1 to the same value
-        self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False)
+        self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=5, stride=2, padding=3, bias=False)
         self.bn = nn.BatchNorm2d(self.inplanes)
         self.bn2 = nn.BatchNorm2d(128)
         self.bn3 = nn.BatchNorm2d(512)

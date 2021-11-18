@@ -105,7 +105,7 @@ class Network(nn.Module):
         self.dropout2 = nn.Dropout2d(p=0.15)
         self.dropout3 = nn.Dropout2d(p=0.2)
         self.l1 = self._make_layer(64, 2)
-        self.l2 = self._make_layer(128, 3, 2)
+        self.l2 = self._make_layer(128, 2, 2)
         self.l3 = self._make_layer(256, 2, 2)
         self.l4 = self._make_layer(512, 2, 2)
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))

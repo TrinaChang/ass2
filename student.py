@@ -142,7 +142,7 @@ class Network(nn.Module):
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = self.fc(x)
-        return F.log_softmax(x, dim=1)
+        return x
 
 net = Network()
     
@@ -169,8 +169,8 @@ def weights_init(m):
         nn.init.constant_(m.bias, 0)
     return
 
-scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gamma=0.1)
-
+# scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gamma=0.1)
+scheduler = None
 ############################################################################
 #######              Metaparameters and training options              ######
 ############################################################################

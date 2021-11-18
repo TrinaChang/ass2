@@ -77,7 +77,7 @@ class ResidualBlock(nn.Module):
         x = self.conv1(x)
         x = self.bn(x)
         x = self.relu(x)
-        x = self.dropout
+        x = self.dropout(x)
         x = self.conv2(x)
         # x = self.bn(x)
         

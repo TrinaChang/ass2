@@ -67,7 +67,7 @@ class ResidualBlock(nn.Module):
         self.conv1 = nn.Conv2d(inplanes, planes, stride=stride, kernel_size=3, padding=1)
         self.conv2 = nn.Conv2d(planes, planes, stride=1, kernel_size=3, padding=1)
         self.bn = nn.BatchNorm2d(planes)
-        self.relu = nn.ReLU(inplace=True)
+        self.relu = nn.ReLU()
         self.dropout = nn.Dropout2d(0.3, inplace=True)
         self.downsample = downsample
         

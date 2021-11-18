@@ -105,6 +105,7 @@ class Network(nn.Module):
         self.l2 = self._make_layer(128, 2, 2)
         self.l3 = self._make_layer(256, 2, 2)
         self.l4 = self._make_layer(512, 2, 2)
+        self.convend = nn.Conv2d(512, 256, 3)
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.fc = nn.Linear(512, 8)
         self.fc2 = nn.Linear(256, 8)
@@ -144,9 +145,11 @@ class Network(nn.Module):
         x = self.l4(x)
         x = self.relu(x)
         x = self.dropout3(x)
+        x = self.maxpool(x)
+        x = self.convend
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
-        x = self.fc(x)
+        x = self.fc2(x)
         return x
 
 net = Network()
@@ -174,7 +177,7 @@ def weights_init(m):
         nn.init.constant_(m.bias, 0)
     return
 
-scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[80, 160, 240], gamma=0.1)
+scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gamma=0.1)
 
 ############################################################################
 #######              Metaparameters and training options              ######

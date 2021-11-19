@@ -137,7 +137,7 @@ class Network(nn.Module):
         x = self.l2(x)
         x = self.relu(x)
         x = self.dropout2(x)
-        x = self.maxpool(x)
+        x = self.maxpool2(x)
         x = self.l3(x)
         x = self.l4(x)
         x = self.relu(x)

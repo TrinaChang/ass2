@@ -84,7 +84,7 @@ class ResidualBlock(nn.Module):
         #     identity = self.downsample(identity)      
         # x += identity
         # x = self.relu(x)
-        # return x
+        return x
  
  
 class Network(nn.Module):

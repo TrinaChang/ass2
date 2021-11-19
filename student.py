@@ -172,7 +172,7 @@ def weights_init(m):
         nn.init.constant_(m.bias, 0)
     return
 
-scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150, 185], gamma=0.1)
+scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gamma=0.1)
 
 ############################################################################
 #######              Metaparameters and training options              ######

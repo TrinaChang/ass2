@@ -95,8 +95,8 @@ class Network(nn.Module):
         self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False)
         self.bn = nn.BatchNorm2d(self.inplanes)
         self.relu = nn.ReLU()
-        self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
-        self.maxpool2 = nn.MaxPool2d(kernel_size=5, stride=2, padding=1)
+        self.maxpool = nn.MaxPool2d(kernel_size=5, stride=2, padding=1)
+        self.maxpool2 = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.dropout = nn.Dropout2d(p=0.1)
         self.dropout2 = nn.Dropout2d(p=0.15)
         self.dropout3 = nn.Dropout2d(p=0.2)
@@ -152,7 +152,7 @@ net = Network()
 ############################################################################
 ######      Specify the optimizer and loss function                   ######
 ############################################################################
-optimizer = optim.AdamW(net.parameters(), lr=5e-3)
+optimizer = optim.AdamW(net.parameters(), lr=1e-3)
 
 loss_func = nn.CrossEntropyLoss()
 

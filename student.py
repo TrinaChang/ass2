@@ -39,7 +39,7 @@ def transform(mode):
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),
-            transforms.ToTensor(),
+            transforms.ToTensor()
         ])
         # return transforms.ToTensor()
         return trainSet
@@ -51,7 +51,7 @@ def transform(mode):
             transforms.RandomHorizontalFlip(p=0.5),
             transforms.RandomVerticalFlip(p=0.05),
             transforms.RandomRotation(degrees=60),
-            transforms.ToTensor(),
+            transforms.ToTensor()
         ])
         # return transforms.ToTensor()
         return testSet
@@ -94,13 +94,13 @@ class Network(nn.Module):
         self.inplanes = 64  # if change this, change first arg of self.l1 to the same value
         self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False)
         self.bn = nn.BatchNorm2d(self.inplanes)
-        self.bn2 = nn.BatchNorm2d(128)
         self.relu = nn.ReLU()
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.maxpool2 = nn.MaxPool2d(kernel_size=3, stride=3, padding=1)
         self.dropout = nn.Dropout2d(p=0.1)
         self.dropout2 = nn.Dropout2d(p=0.15)
         self.dropout3 = nn.Dropout2d(p=0.2)
+        self.dropout4 = nn.Dropout2d(p=0.25)
         self.l1 = self._make_layer(64, 2)
         self.l2 = self._make_layer(128, 2, 2)
         self.l3 = self._make_layer(256, 2, 2)
@@ -136,14 +136,16 @@ class Network(nn.Module):
         x = self.maxpool(x)
         x = self.l1(x)
         x = self.l2(x)
-        x = self.bn2(x)
         x = self.relu(x)
         x = self.dropout2(x)
         x = self.maxpool(x)
         x = self.l3(x)
         x = self.l4(x)
         x = self.relu(x)
-        x = self.dropout3(x)
+        if (self.inplanes < 256):
+            x = self.dropout3(x)
+        else:
+            x = self.dropout4(x)
         x = self.avgpool(x)
         x = torch.flatten(x, 1)
         x = self.fc(x)
@@ -174,12 +176,12 @@ def weights_init(m):
         nn.init.constant_(m.bias, 0)
     return
 
-scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gamma=0.1)
+scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150, 200, 250, 300, 350, 400, 450], gamma=0.1)
 
 ############################################################################
 #######              Metaparameters and training options              ######
 ############################################################################
 dataset = "./data"
-train_val_split = 0.8
+train_val_split = 0.99
 batch_size = 64
 epochs = 300

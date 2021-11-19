@@ -15,13 +15,13 @@ import torch.nn.functional as F
 import torch.optim as optim
 import torchvision
 import torchvision.transforms as transforms
-
+ 
 """
    Answer to Question:
 Briefly describe how your program works, and explain any design and training
 decisions you made along the way.
 """
-
+ 
 ############################################################################
 ######     Specify transform(s) to be applied to the input images     ######
 ############################################################################
@@ -55,12 +55,12 @@ def transform(mode):
         ])
         # return transforms.ToTensor()
         return testSet
-
-
+ 
+ 
 ############################################################################
 ######   Define the Module to process the images and produce labels   ######
 ############################################################################
-
+ 
 class ResidualBlock(nn.Module):
     def __init__(self, inplanes, planes, stride=1, downsample=None):
         super().__init__()
@@ -85,18 +85,18 @@ class ResidualBlock(nn.Module):
         x += identity
         x = self.relu(x)
         return x
-
-
+ 
+ 
 class Network(nn.Module):
-
+ 
     def __init__(self):
         super().__init__()
         self.inplanes = 64  # if change this, change first arg of self.l1 to the same value
         self.conv1 = nn.Conv2d(3, self.inplanes, kernel_size=7, stride=2, padding=3, bias=False)
         self.bn = nn.BatchNorm2d(self.inplanes)
         self.relu = nn.ReLU()
-        self.maxpool = nn.MaxPool2d(kernel_size=5, stride=2, padding=1)
-        self.maxpool2 = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
+        self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
+        self.maxpool2 = nn.MaxPool2d(kernel_size=3, stride=3, padding=1)
         self.dropout = nn.Dropout2d(p=0.1)
         self.dropout2 = nn.Dropout2d(p=0.15)
         self.dropout3 = nn.Dropout2d(p=0.2)
@@ -137,7 +137,7 @@ class Network(nn.Module):
         x = self.l2(x)
         x = self.relu(x)
         x = self.dropout2(x)
-        x = self.maxpool2(x)
+        x = self.maxpool(x)
         x = self.l3(x)
         x = self.l4(x)
         x = self.relu(x)
@@ -146,21 +146,21 @@ class Network(nn.Module):
         x = torch.flatten(x, 1)
         x = self.fc(x)
         return x
-
+ 
 net = Network()
     
 ############################################################################
 ######      Specify the optimizer and loss function                   ######
 ############################################################################
-optimizer = optim.AdamW(net.parameters(), lr=1e-3)
-
+optimizer = optim.AdamW(net.parameters(), lr=5e-3)
+ 
 loss_func = nn.CrossEntropyLoss()
-
-
+ 
+ 
 ############################################################################
 ######  Custom weight initialization and lr scheduling are optional   ######
 ############################################################################
-
+ 
 # Normally, the default weight initialization and fixed learing rate
 # should work fine. But, we have made it possible for you to define
 # your own custom weight initialization and lr scheduler, if you wish.
@@ -171,9 +171,9 @@ def weights_init(m):
         nn.init.constant_(m.weight, 1)
         nn.init.constant_(m.bias, 0)
     return
-
+ 
 scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150], gamma=0.1)
-
+ 
 ############################################################################
 #######              Metaparameters and training options              ######
 ############################################################################

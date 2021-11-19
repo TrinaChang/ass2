@@ -241,6 +241,6 @@ scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[100, 150, 200,
 #######              Metaparameters and training options              ######
 ############################################################################
 dataset = "./data"
-train_val_split = 0.8
+train_val_split = 1
 batch_size = 64
-epochs = 500
+epochs = 300

@@ -80,11 +80,11 @@ class ResidualBlock(nn.Module):
         # x = self.bn(x)
         
         # apply skip connection, add identity
-        if self.downsample is not None:
-            identity = self.downsample(identity)      
-        x += identity
-        x = self.relu(x)
-        return x
+        # if self.downsample is not None:
+        #     identity = self.downsample(identity)      
+        # x += identity
+        # x = self.relu(x)
+        # return x
  
  
 class Network(nn.Module):
